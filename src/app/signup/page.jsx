@@ -1,12 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { authUser } from "@/lib/pocketbase";
+import { createUser } from "@/lib/pocketbase";
 import Link from "next/link";
 
-const Login = () => {
+const SignUp = () => {
   const [userScheme, setUserScheme] = useState({
+    name: "",
+    username: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   });
 
   const handleChange = (e) => {
@@ -21,7 +24,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    authUser(userScheme);
+    createUser(userScheme);
   };
 
   return (
@@ -32,6 +35,22 @@ const Login = () => {
         onSubmit={handleSubmit}
         className="flex items-center justify-center flex-col gap-5"
       >
+        <input
+          type="text"
+          name="name"
+          value={userScheme?.name}
+          placeholder="name"
+          onChange={handleChange}
+          className="border px-3 py-2.5 rounded"
+        />
+        <input
+          type="text"
+          name="username"
+          value={userScheme?.username}
+          placeholder="username"
+          onChange={handleChange}
+          className="border px-3 py-2.5 rounded"
+        />
         <input
           type="email"
           name="email"
@@ -48,28 +67,31 @@ const Login = () => {
           onChange={handleChange}
           className="border px-3 py-2.5 rounded"
         />
+        <input
+          type="password"
+          name="passwordConfirm"
+          value={userScheme?.passwordConfirm}
+          placeholder="password confirm"
+          onChange={handleChange}
+          className="border px-3 py-2.5 rounded"
+        />
 
         <button
-          onClick={() => {
-            setTimeout(() => {
-              location.replace("/home");
-            }, 1000);
-          }}
           type="submit"
           className="border rounded px-3 py-2.5 hover:shadow"
         >
-          Login
+          Sign Up
         </button>
 
         <button
           type="submit"
           className="border rounded px-3 py-2.5 hover:shadow bg-purple-500 text-white"
         >
-          Sign Up
+          Login
         </button>
       </form>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;
